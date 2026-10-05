@@ -675,12 +675,13 @@ function schedule(srs,g,now){
   const s=Object.assign(newSrs(),srs||{});
   let ivl=s.ivl,ease=s.ease;
   if(g===0){ease=Math.max(1.3,ease-0.2);s.lapses++;ivl=10/1440;}
-  else if(ivl<1){ivl=[0,2,4,7][g];if(g===1)ease=Math.max(1.3,ease-0.15);if(g===3)ease+=0.15;}
+  else if(ivl<1){ivl=[0,1/24,1,4][g];if(g===1)ease=Math.max(1.3,ease-0.15);if(g===3)ease+=0.15;}
   else if(g===1){ivl=Math.max(ivl+1,ivl*1.2);ease=Math.max(1.3,ease-0.15);}
   else if(g===2){ivl=Math.max(ivl+1,ivl*ease);}
-  else{ivl=Math.max(ivl+2,ivl*ease*1.3);ease+=0.15;}
+  else{ivl=Math.max(ivl+3,ivl*ease*1.3);ease+=0.15;}
+  if(g>0&&ivl>=1)ivl=Math.round(ivl);
   ivl=Math.min(ivl,3650);
-  s.reps++;s.due=now+ivl*DAY;s.ivl=g===0?0:Math.round(ivl*10)/10;s.ease=Math.round(ease*100)/100;s.last=now;s.lastGrade=g;
+  s.reps++;s.due=now+ivl*DAY;s.ivl=g===0?0:Math.round(ivl*1000)/1000;s.ease=Math.round(ease*100)/100;s.last=now;s.lastGrade=g;
   return s;
 }
 function previewIvl(c,g){const now=Date.now();return fmtIvl((schedule(c.srs,g,now).due-now)/DAY);}
@@ -1588,9 +1589,9 @@ function setupHTML(){
         <div class="panel-h"><div><h3>Répétition espacée</h3><p>Intervalle avant la prochaine révision d'une nouvelle carte</p></div></div>
         <div class="ivl-table">
           <div><span><b style="color:var(--bad)">À revoir</b> — la carte revient dans la session</span><span class="mono">10 min</span></div>
-          <div><span><b style="color:var(--hard)">Difficile</b></span><span class="mono">2 j</span></div>
-          <div><span><b style="color:var(--good)">Bien</b></span><span class="mono">4 j</span></div>
-          <div><span><b style="color:var(--info)">Facile</b></span><span class="mono">7 j</span></div>
+          <div><span><b style="color:var(--hard)">Difficile</b></span><span class="mono">1 h</span></div>
+          <div><span><b style="color:var(--good)">Bien</b></span><span class="mono">1 j</span></div>
+          <div><span><b style="color:var(--info)">Facile</b></span><span class="mono">4 j</span></div>
         </div>
         <p class="muted" style="font-size:.85rem;margin-top:10px">Ensuite, chaque bonne réponse multiplie l'intervalle par la facilité de la carte (×2,5 au départ). Une carte est <b>maîtrisée</b> quand son intervalle atteint ${MASTER_IVL} jours (boîte 5).</p>
       </div>
@@ -1883,7 +1884,7 @@ VIEWS.settings=()=>{
       <div class="set-row"><div><b style="color:var(--bad)">Tout effacer</b><small>Supprime decks, cartes, historique et statistiques</small></div><button class="btn btn-sm btn-danger" data-act="set-wipe">${ic('trash',15)}Effacer</button></div>
     </section>
     <section class="panel"><div class="panel-h"><h3>À propos de la répétition espacée</h3></div>
-      <p style="color:var(--fg-2);font-size:.93rem">Chaque carte possède un intervalle et un coefficient de facilité. « À revoir » la fait revenir dans 10 minutes et baisse sa facilité ; « Difficile » allonge peu l'intervalle ; « Bien » le multiplie par la facilité ; « Facile » le multiplie davantage et augmente la facilité. Les cartes sont rangées en 5 boîtes selon leur intervalle : moins d'un jour, 1–3 j, 3–7 j, 7–${MASTER_IVL} j, puis maîtrisée.</p>
+      <p style="color:var(--fg-2);font-size:.93rem">Chaque carte possède un intervalle et un coefficient de facilité. Pour une carte en apprentissage, « À revoir » la fait revenir dans 10 minutes, « Difficile » dans 1 heure, « Bien » le lendemain et « Facile » dans 4 jours. Ensuite, « À revoir » la renvoie à 10 minutes et baisse sa facilité ; « Difficile » allonge peu l'intervalle ; « Bien » le multiplie par la facilité ; « Facile » le multiplie davantage et augmente la facilité. Les cartes sont rangées en 5 boîtes selon leur intervalle : moins d'un jour, 1–3 j, 3–7 j, 7–${MASTER_IVL} j, puis maîtrisée.</p>
     </section>
   </div></div>`;
 };
