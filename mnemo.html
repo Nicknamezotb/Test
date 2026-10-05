@@ -654,7 +654,7 @@ const TYPES={
 const DIFF=['','Très facile','Facile','Moyen','Difficile','Expert'];
 const LEVELS=['Primaire','Collège — 6e','Collège — 5e','Collège — 4e','Collège — 3e','Lycée — 2de','Lycée — 1re','Lycée — Terminale','Supérieur — Licence','Supérieur — Master','Prépa / Concours','Formation pro','CECRL A1','CECRL A2','CECRL B1','CECRL B2','CECRL C1'];
 const LANGS=['Français','Anglais','Espagnol','Allemand','Italien','Latin'];
-const SUBJECTS=['SVT','Histoire','Géographie','Mathématiques','Physique-Chimie','Anglais','Espagnol','Français','Philosophie','Économie','Droit','Informatique','Médecine'];
+const SUBJECTS=['Réseaux','SVT','Histoire','Géographie','Mathématiques','Physique-Chimie','Anglais','Espagnol','Français','Philosophie','Économie','Droit','Informatique','Médecine'];
 const FIELDS={
   front:[['term','Terme','Mot ou notion mis en avant au recto'],['q','Question','Question, affirmation ou texte à trous'],['image','Image','Schéma, carte ou photo facultative'],['hint','Indice','Aide affichée à la demande']],
   back:[['a','Réponse','Réponse principale'],['expl','Explication','Pourquoi c\'est la bonne réponse'],['ex','Exemple','Cas concret ou illustration'],['imp','Point important','À retenir absolument'],['err','Erreur fréquente','Piège ou confusion classique'],['src','Source / référence','Manuel, page, cours']]
@@ -705,101 +705,116 @@ function frontText(c){
 }
 function defaultSettings(){return {theme:'system',accent:'emeraude',font:'m',anim:true,compact:false,sound:false,order:'due',newLimit:10,showIvl:true,autoHint:false};}
 
-/* ---------- données de démonstration ---------- */
+/* ---------- decks Réseaux (Cisco ITN, modules 1 et 2) ---------- */
+const SRC_NET='Résumé modules 1 et 2 — Cisco ITN v7.0';
 const DEMO=[
- {name:'Biologie cellulaire',subject:'SVT',chapter:'La cellule, unité du vivant',theme:'Organites et échanges',level:'Lycée — 2de',lang:'Français',color:'#127A5C',cards:[
-  {t:'qa',q:"Quel organite produit l'essentiel de l'ATP de la cellule ?",a:'La mitochondrie.',expl:"La respiration cellulaire s'y déroule : l'oxydation du glucose est couplée à la synthèse d'ATP.",ex:'Une cellule musculaire contient plusieurs centaines de mitochondries.',tags:['organites','métabolisme'],d:2,src:'Manuel SVT 2de, p. 34'},
-  {t:'term',term:'Ribosome',a:"Complexe d'ARN et de protéines qui traduit l'ARN messager en chaîne d'acides aminés.",imp:'Présent chez tous les êtres vivants, procaryotes compris.',tags:['organites'],d:2},
-  {t:'cloze',q:'La membrane plasmique est constituée d\'une double couche de {{phospholipides}}.',expl:'Leur tête hydrophile est tournée vers l\'eau, leur queue hydrophobe vers l\'intérieur de la membrane.',tags:['membrane'],d:2,hint:'Des lipides particuliers'},
-  {t:'tf',q:'Les cellules procaryotes possèdent un noyau délimité par une enveloppe.',tf:false,expl:"Chez les procaryotes, l'ADN est libre dans le cytoplasme : on parle de nucléoïde.",err:'Confondre nucléoïde et noyau.',tags:['ADN'],d:1},
-  {t:'mcq',q:'Où se déroule la photosynthèse ?',opts:['Dans le chloroplaste','Dans la mitochondrie','Dans l\'appareil de Golgi','Dans le lysosome'],ok:0,expl:'Les chloroplastes contiennent la chlorophylle qui capte l\'énergie lumineuse.',tags:['organites','métabolisme'],d:1},
-  {t:'concept',term:'Diffusion passive',q:'Explique ce mécanisme.',a:'Déplacement de molécules du milieu le plus concentré vers le moins concentré, sans dépense d\'énergie.',ex:'Le dioxygène traverse la paroi des alvéoles pulmonaires.',tags:['membrane'],d:3},
-  {t:'qa',q:'Quelle est la différence entre mitose et méiose ?',a:'La mitose produit 2 cellules identiques (2n) ; la méiose produit 4 cellules haploïdes (n) génétiquement différentes.',imp:'La méiose ne concerne que les cellules à l\'origine des gamètes.',err:'Croire que la méiose produit des cellules diploïdes.',tags:['ADN'],d:4,star:true},
-  {t:'term',term:'Transport actif',a:'Passage d\'une substance contre son gradient de concentration, grâce à une protéine qui consomme de l\'ATP.',ex:'La pompe sodium-potassium.',tags:['membrane'],d:4},
-  {t:'qa',q:"Quel est le rôle de l'appareil de Golgi ?",a:'Modifier, trier et emballer les protéines dans des vésicules avant leur expédition.',tags:['organites'],d:3},
-  {t:'cloze',q:"L'ADN est formé de deux brins enroulés en {{double hélice}}.",expl:'Structure décrite en 1953 par Watson et Crick à partir des clichés de Rosalind Franklin.',tags:['ADN'],d:1},
-  {t:'mcq',q:"Quelle base azotée est absente de l'ADN ?",opts:['Uracile','Thymine','Adénine','Cytosine'],ok:0,expl:"L'uracile remplace la thymine dans l'ARN.",tags:['ADN'],d:3},
-  {t:'qa',q:"Pourquoi une cellule animale placée dans de l'eau pure gonfle-t-elle ?",a:"Par osmose : l'eau entre vers le milieu intracellulaire, plus concentré en solutés.",err:'Penser que ce sont les solutés qui sortent de la cellule.',tags:['membrane'],d:5,star:true}
+ {name:'Module 1 — Les réseaux aujourd\'hui',subject:'Réseaux',chapter:'Module 1 : Networking Today',theme:'Composants, types, architecture, sécurité',level:'Supérieur — Licence',lang:'Français',color:'#127A5C',cards:[
+  {t:'term',term:'Hôte (end device)',a:'Appareil final du réseau : ordinateur, smartphone, imprimante, etc.',tags:['composants'],d:1},
+  {t:'qa',q:'Quelle différence entre un hôte serveur et un hôte client ?',a:'Le serveur fournit un service (web, mail, fichiers) ; le client demande ce service.',tags:['composants'],d:2},
+  {t:'concept',term:'Peer-to-peer',q:'Explique ce modèle, ses avantages et ses limites.',a:'Chaque appareil est à la fois client et serveur.',expl:'Avantages : simple et peu cher. Limites : pas d\'administration centralisée, sécurité moindre, ne passe pas à l\'échelle, plus lent.',tags:['composants'],d:3},
+  {t:'mcq',q:'Lequel de ces points n\'est PAS un inconvénient du peer-to-peer ?',opts:['Un coût élevé','Pas d\'administration centralisée','Une sécurité moindre','Ne passe pas à l\'échelle'],ok:0,expl:'Le peer-to-peer est au contraire simple et peu cher.',tags:['composants','pièges'],d:3},
+  {t:'qa',q:'Cite les équipements intermédiaires d\'un réseau.',a:'Switchs, points d\'accès Wi-Fi, routeurs, switchs multicouches, pare-feu.',tags:['composants'],d:2},
+  {t:'qa',q:'Quels sont les rôles des équipements intermédiaires ?',a:'Régénérer et retransmettre les signaux, garder en mémoire les chemins, signaler les erreurs.',tags:['composants'],d:3},
+  {t:'mcq',q:'Sur la fibre optique, les données sont transmises sous forme de…',opts:['Lumière','Impulsions électriques','Ondes électromagnétiques','Signaux sonores'],ok:0,tags:['supports'],d:1},
+  {t:'cloze',q:'Sur le cuivre, les données circulent sous forme d\'{{impulsions électriques}} ; sans fil, sous forme d\'{{ondes électromagnétiques}}.',tags:['supports'],d:1},
+  {t:'term',term:'NIC',a:'Carte réseau (Network Interface Card).',tags:['vocabulaire'],d:1},
+  {t:'qa',q:'Quelle différence entre topologie physique et topologie logique ?',a:'Physique : emplacement des équipements et câblage. Logique : adresses, ports et interfaces.',err:'Confondre les deux : le câblage relève de la topologie physique.',tags:['vocabulaire'],d:3},
+  {t:'term',term:'SOHO',a:'Small Office / Home Office : réseau d\'un petit bureau ou d\'une maison.',tags:['types de réseaux'],d:2},
+  {t:'qa',q:'Quelle différence entre un LAN et un WAN ?',a:'LAN : réseau local sur une zone limitée, géré par une seule organisation. WAN : réseau étendu sur de grandes distances, souvent opéré par des fournisseurs.',tags:['types de réseaux'],d:2,star:true},
+  {t:'tf',q:'Internet appartient à l\'ICANN.',tf:false,expl:'Internet n\'appartient à personne. Il est coordonné par l\'IETF, l\'ICANN et l\'IAB.',tags:['types de réseaux','pièges'],d:3},
+  {t:'mcq',q:'Quels organismes coordonnent Internet ?',opts:['IETF, ICANN et IAB','IEEE, ISO et ITU','Cisco, IETF et W3C','L\'ICANN uniquement'],ok:0,tags:['types de réseaux'],d:4},
+  {t:'qa',q:'Quelle différence entre intranet et extranet ?',a:'Intranet : réseau privé interne à une organisation. Extranet : accès contrôlé donné à des tiers (clients, partenaires).',err:'Inverser les deux termes.',tags:['types de réseaux'],d:3},
+  {t:'qa',q:'Quels sont les modes d\'accès à Internet à domicile ?',a:'Câble, DSL, cellulaire, satellite, dial-up.',tags:['accès Internet'],d:2},
+  {t:'qa',q:'Quels sont les modes d\'accès à Internet en entreprise ?',a:'Ligne louée dédiée, Metro Ethernet, DSL professionnel (SDSL), satellite.',tags:['accès Internet'],d:3},
+  {t:'term',term:'Réseau convergent',a:'Réseau où voix, vidéo et données passent sur la même infrastructure.',tags:['accès Internet'],d:2},
+  {t:'qa',q:'Quelles sont les 4 caractéristiques d\'une architecture réseau fiable ?',a:'Tolérance aux pannes, évolutivité, QoS (qualité de service), sécurité.',tags:['architecture'],d:2,star:true},
+  {t:'mcq',q:'Quelle caractéristique repose sur la commutation de paquets et la redondance ?',opts:['La tolérance aux pannes','L\'évolutivité','La QoS','La sécurité'],ok:0,expl:'Elle permet au réseau de continuer à fonctionner malgré une panne.',tags:['architecture'],d:3},
+  {t:'term',term:'Évolutivité (scalability)',a:'Capacité du réseau à grandir sans dégrader les performances.',tags:['architecture'],d:2},
+  {t:'term',term:'QoS (qualité de service)',a:'Priorité donnée au trafic sensible, comme la voix et la vidéo.',tags:['architecture'],d:2},
+  {t:'cloze',q:'La sécurité d\'un réseau vise la confidentialité, l\'{{intégrité}} et la {{disponibilité}}.',tags:['architecture','sécurité'],d:3},
+  {t:'term',term:'BYOD',a:'Bring Your Own Device : chacun apporte et utilise son propre appareil.',tags:['tendances'],d:1},
+  {t:'qa',q:'Quels sont les types de cloud computing ?',a:'Public, privé, hybride et personnalisé.',tags:['tendances'],d:3},
+  {t:'qa',q:'Cite les autres tendances réseau du module.',a:'Collaboration en ligne, communications vidéo, maison connectée, réseau par courant porteur (powerline), haut débit sans fil (WISP).',tags:['tendances'],d:4},
+  {t:'qa',q:'Cite des menaces externes.',a:'Virus, vers, chevaux de Troie, spyware/adware, attaques zero-day, attaquants (threat actors), déni de service (DoS), interception ou vol de données, usurpation d\'identité.',tags:['sécurité'],d:3},
+  {t:'tf',q:'Un employé malveillant est une menace externe.',tf:false,expl:'C\'est une menace interne, comme les appareils perdus ou volés et la mauvaise utilisation accidentelle.',tags:['sécurité','pièges'],d:2},
+  {t:'qa',q:'Quelles solutions de sécurité à la maison et en entreprise ?',a:'Maison : antivirus, antispyware, pare-feu. Entreprise : pare-feu dédié, ACL, IPS, VPN.',tags:['sécurité'],d:3}
  ]},
- {name:'La Révolution française',subject:'Histoire',chapter:'1789–1799',theme:'De la monarchie à la République',level:'Collège — 4e',lang:'Français',color:'#2B59C3',cards:[
-  {t:'qa',q:'Quelle date marque la prise de la Bastille ?',a:'Le 14 juillet 1789.',expl:'La forteresse, symbole de l\'arbitraire royal, est prise par le peuple parisien.',tags:['dates'],d:1},
-  {t:'qa',q:'Que décide l\'Assemblée lors de la nuit du 4 août 1789 ?',a:"L'abolition des privilèges et des droits féodaux.",tags:['dates','institutions'],d:2},
-  {t:'term',term:'Tiers état',a:'Ordre regroupant tous ceux qui ne sont ni nobles ni membres du clergé, soit environ 98 % de la population.',tags:['institutions'],d:2},
-  {t:'cloze',q:"La Déclaration des droits de l'homme et du citoyen est adoptée le {{26 août 1789}}.",tags:['dates','idées'],d:3},
-  {t:'mcq',q:'Qui est guillotiné le 21 janvier 1793 ?',opts:['Louis XVI','Robespierre','Danton','Marat'],ok:0,tags:['personnages'],d:1},
-  {t:'tf',q:'La Terreur prend fin avec la chute de Robespierre en 1794.',tf:true,expl:'Robespierre est exécuté le 28 juillet 1794 (10 thermidor an II).',tags:['personnages','dates'],d:3},
-  {t:'concept',term:'Souveraineté nationale',q:'Explique ce principe.',a:'Le pouvoir appartient à la nation et non plus au roi.',ex:'Article 3 de la Déclaration des droits de l\'homme et du citoyen.',tags:['idées'],d:3,star:true},
-  {t:'qa',q:'Pourquoi Louis XVI convoque-t-il les États généraux en 1789 ?',a:'Pour résoudre la crise financière d\'un royaume au bord de la faillite.',tags:['dates'],d:3},
-  {t:'mcq',q:'Quel régime succède à la Convention en 1795 ?',opts:['Le Directoire','Le Consulat','L\'Empire','La monarchie constitutionnelle'],ok:0,err:'Confondre le Directoire (1795) et le Consulat (1799).',tags:['institutions'],d:4},
-  {t:'qa',q:"Qu'est-ce que le serment du Jeu de paume ?",a:"L'engagement des députés du tiers état, le 20 juin 1789, de ne pas se séparer avant d'avoir donné une Constitution à la France.",tags:['dates','institutions'],d:4},
-  {t:'term',term:'Sans-culottes',a:'Révolutionnaires parisiens issus du peuple (artisans, boutiquiers), favorables à une démocratie directe.',tags:['personnages'],d:3}
+ {name:'Module 2 — Cisco IOS : accès, modes et commandes',subject:'Réseaux',chapter:'Module 2 : Basic Switch and End Device Configuration',theme:'Accès à l\'IOS, navigation, structure des commandes',level:'Supérieur — Licence',lang:'Français',color:'#2B59C3',cards:[
+  {t:'qa',q:'Quels sont les 3 composants d\'un système d\'exploitation ?',a:'Le shell (interface CLI ou GUI), le noyau (kernel) et le matériel.',tags:['OS'],d:2},
+  {t:'term',term:'Noyau (kernel)',a:'Partie de l\'OS qui fait le lien entre le matériel et le logiciel.',tags:['OS'],d:2},
+  {t:'qa',q:'Pourquoi configure-t-on les équipements réseau en CLI plutôt qu\'en GUI ?',a:'La GUI est conviviale mais peut planter ; la CLI, au clavier, est la méthode utilisée pour les équipements réseau.',tags:['OS'],d:2},
+  {t:'qa',q:'Quelles sont les 3 méthodes d\'accès à un équipement Cisco ?',a:'Console, SSH et Telnet.',tags:['accès'],d:1},
+  {t:'term',term:'Console',a:'Port physique de gestion, utilisé pour la configuration initiale.',tags:['accès'],d:2},
+  {t:'mcq',q:'Quelle méthode d\'accès distant est recommandée ?',opts:['SSH','Telnet','Console','AUX'],ok:0,expl:'SSH est sécurisé, contrairement à Telnet.',tags:['accès'],d:1},
+  {t:'tf',q:'Telnet chiffre les identifiants et les commandes.',tf:false,expl:'Telnet n\'est pas sécurisé : identifiants et commandes passent en clair. Préférer SSH.',tags:['accès','pièges'],d:2,star:true},
+  {t:'qa',q:'Cite des émulateurs de terminal.',a:'PuTTY, Tera Term, SecureCRT.',tags:['accès'],d:2},
+  {t:'mcq',q:'À quel mode correspond le prompt Switch# ?',opts:['Privileged EXEC','User EXEC','Configuration globale','Config interface'],ok:0,tags:['modes'],d:2},
+  {t:'qa',q:'Mode User EXEC : quel prompt et quel rôle ?',a:'Prompt Switch> : commandes de supervision de base, limitées.',tags:['modes'],d:2},
+  {t:'qa',q:'Mode Privileged EXEC : quel prompt et quel rôle ?',a:'Prompt Switch# : accès à toutes les commandes.',tags:['modes'],d:2},
+  {t:'cloze',q:'Le prompt du mode configuration globale est {{Switch(config)#}}.',tags:['modes'],d:3},
+  {t:'qa',q:'Mode config ligne : quel prompt et quel usage ?',a:'Switch(config-line)# : configurer les lignes console, SSH, Telnet et AUX.',tags:['modes'],d:3},
+  {t:'qa',q:'Mode config interface : quel prompt et quel usage ?',a:'Switch(config-if)# : configurer un port de switch ou une interface de routeur.',tags:['modes'],d:3},
+  {t:'qa',q:'Quelle commande fait passer de User EXEC à Privileged EXEC ?',a:'enable',tags:['navigation'],d:1},
+  {t:'qa',q:'Quelle commande fait entrer en configuration globale ?',a:'configure terminal (abrégée conf t)',tags:['navigation'],d:1},
+  {t:'qa',q:'Quelle commande fait entrer dans la configuration de la ligne console ?',a:'line console 0',tags:['navigation'],d:2},
+  {t:'tf',q:'La commande exit ramène directement au mode Privileged EXEC.',tf:false,expl:'exit remonte d\'un seul niveau. end ou Ctrl+Z ramènent directement au mode Privileged EXEC.',tags:['navigation','pièges'],d:3,star:true},
+  {t:'concept',term:'Structure d\'une commande IOS',q:'Décris-la.',a:'Prompt + commande + espace + mot-clé ou argument.',ex:'ping 192.168.10.5 ; traceroute 192.168.10.5',tags:['commandes'],d:3},
+  {t:'qa',q:'Quelle différence entre un mot-clé et un argument ?',a:'Mot-clé : paramètre prédéfini par l\'IOS (ex. ip protocols). Argument : valeur fournie par l\'utilisateur (ex. 192.168.10.5).',err:'Inverser les deux notions.',tags:['commandes'],d:4},
+  {t:'qa',q:'Comment obtenir l\'aide contextuelle dans l\'IOS ?',a:'En tapant ?',tags:['aide et raccourcis'],d:1},
+  {t:'qa',q:'Que signifie « % Invalid input detected at \'^\' marker » ?',a:'Une erreur de syntaxe : le ^ indique l\'endroit où la commande est incorrecte.',tags:['aide et raccourcis'],d:3},
+  {t:'tf',q:'On peut abréger une commande tant qu\'elle reste non ambiguë, par exemple conf t.',tf:true,tags:['aide et raccourcis'],d:2},
+  {t:'qa',q:'À quoi sert la touche Tab ?',a:'À compléter la commande ou le mot-clé.',tags:['aide et raccourcis'],d:1},
+  {t:'qa',q:'Comment rappeler la commande précédente ?',a:'Flèche haut ou Ctrl+P.',tags:['aide et raccourcis'],d:2},
+  {t:'qa',q:'Comment déplacer le curseur dans la ligne de commande ?',a:'Flèche gauche ou Ctrl+B ; flèche droite ou Ctrl+F.',tags:['aide et raccourcis'],d:3},
+  {t:'mcq',q:'Quel raccourci interrompt un ping ou un traceroute ?',opts:['Ctrl+Shift+6','Ctrl+C','Ctrl+Z','Échap'],ok:0,err:'Confondre avec Ctrl+C / Ctrl+Z, qui font sortir du mode configuration.',tags:['aide et raccourcis'],d:4},
+  {t:'qa',q:'Devant --More--, que font Entrée et Espace ?',a:'Entrée affiche la ligne suivante ; Espace affiche l\'écran suivant.',tags:['aide et raccourcis'],d:3}
  ]},
- {name:'Anglais — En voyage',subject:'Anglais',chapter:'Vocabulaire',theme:'Aéroport, hôtel, restaurant',level:'CECRL B1',lang:'Anglais',color:'#BD4A2F',cards:[
-  {t:'term',term:'Boarding pass',a:"Carte d'embarquement",tags:['aéroport'],d:1},
-  {t:'term',term:'Luggage',a:'Bagages (nom indénombrable : a piece of luggage)',err:'Écrire « luggages ».',tags:['aéroport'],d:2},
-  {t:'term',term:'To check in',a:"S'enregistrer (à l'hôtel ou à l'aéroport)",tags:['hôtel','aéroport'],d:1},
-  {t:'mcq',q:'Comment traduire « une escale » ?',opts:['A layover','A boarding','A lounge','A runway'],ok:0,tags:['aéroport'],d:2},
-  {t:'tf',q:'« Actually » signifie « actuellement ».',tf:false,expl:'« Actually » = en fait. « Actuellement » se dit « currently ».',tags:['faux-amis'],d:2,star:true},
-  {t:'cloze',q:'Could you {{recommend}} a good restaurant nearby?',hint:'Conseiller',tags:['expressions'],d:2},
-  {t:'qa',q:"Comment demander l'addition au restaurant ?",a:'Could I have the bill, please? (UK) — Could I get the check? (US)',tags:['expressions'],d:2},
-  {t:'term',term:'Fare',a:"Prix d'un billet (transport)",err:'Confondre avec « fair » (juste, foire).',tags:['aéroport'],d:3},
-  {t:'tf',q:'« Library » signifie « librairie ».',tf:false,expl:'Library = bibliothèque ; une librairie = a bookshop.',tags:['faux-amis'],d:1},
-  {t:'qa',q:"Que veut dire « I'm running late » ?",a:'Je suis en retard.',tags:['expressions'],d:3},
-  {t:'term',term:'Customs',a:'La douane',tags:['aéroport'],d:2},
-  {t:'cloze',q:'My flight has been {{delayed}} by two hours.',tags:['aéroport'],d:2}
- ]},
- {name:'Probabilités',subject:'Mathématiques',chapter:'Probabilités conditionnelles',theme:'Indépendance et loi binomiale',level:'Lycée — Terminale',lang:'Français',color:'#7A3B8F',cards:[
-  {t:'qa',q:'Quelle est la formule de P(A ∪ B) ?',a:'P(A) + P(B) − P(A ∩ B)',tags:['formules'],d:2},
-  {t:'term',term:'Événements indépendants',a:'A et B sont indépendants si P(A ∩ B) = P(A) × P(B).',err:'Confondre « indépendants » et « incompatibles ».',tags:['définitions'],d:3},
-  {t:'tf',q:'Deux événements incompatibles de probabilités non nulles sont indépendants.',tf:false,expl:'P(A ∩ B) = 0 alors que P(A) × P(B) > 0.',tags:['pièges'],d:5,star:true},
-  {t:'cloze',q:"L'espérance d'une loi binomiale B(n, p) vaut {{np}}.",tags:['formules'],d:2},
-  {t:'mcq',q:'Quelle est la variance de B(n, p) ?',opts:['np(1 − p)','np','√(np)','n²p'],ok:0,tags:['formules'],d:3},
-  {t:'qa',q:'Énonce la formule des probabilités totales pour la partition {A, Ā}.',a:'P(B) = P(A) × P_A(B) + P(Ā) × P_Ā(B)',tags:['formules'],d:4},
-  {t:'concept',term:'Probabilité conditionnelle',q:'Donne la définition.',a:'P_A(B) = P(A ∩ B) / P(A) : probabilité de B sachant que A est réalisé.',tags:['définitions'],d:3},
-  {t:'qa',q:'Combien de chemins réalisent k succès sur n épreuves ?',a:'C(n, k), le coefficient binomial « k parmi n ».',tags:['formules'],d:4}
+ {name:'Module 2 — Configuration de base et adressage IP',subject:'Réseaux',chapter:'Module 2 : Basic Switch and End Device Configuration',theme:'Configuration, sauvegarde, IPv4/IPv6, SVI',level:'Supérieur — Licence',lang:'Français',color:'#BD4A2F',cards:[
+  {t:'qa',q:'Quelle commande donne un nom d\'hôte à un équipement ?',a:'hostname suivi du nom (ex. hostname Sw-Floor-1). no hostname rétablit le nom par défaut.',tags:['configuration de base'],d:1},
+  {t:'qa',q:'Quelles règles doit respecter un nom d\'hôte ?',a:'Commencer par une lettre, finir par une lettre ou un chiffre, ni espaces ni caractères spéciaux (sauf tirets), moins de 64 caractères.',tags:['configuration de base'],d:3},
+  {t:'tf',q:'« 1-Switch » est un nom d\'hôte valide.',tf:false,expl:'Un nom d\'hôte doit commencer par une lettre.',tags:['configuration de base','pièges'],d:3},
+  {t:'qa',q:'Quelles sont les bonnes pratiques pour les mots de passe ?',a:'Plus de 8 caractères, mélange de majuscules, minuscules, chiffres et caractères spéciaux, pas de mots courants, un mot de passe différent par équipement.',imp:'« cisco » et « class » sont réservés aux labs : à éviter en production.',tags:['mots de passe'],d:2},
+  {t:'qa',q:'Comment sécuriser l\'accès User EXEC par la console ?',a:'line console 0, puis password xxx, puis login.',tags:['mots de passe'],d:3},
+  {t:'qa',q:'Comment sécuriser l\'accès au mode Privileged EXEC ?',a:'enable secret xxx',tags:['mots de passe'],d:2,star:true},
+  {t:'cloze',q:'Pour sécuriser l\'accès distant : line vty {{0 15}}, puis password xxx, puis {{login}}.',tags:['mots de passe'],d:4},
+  {t:'term',term:'Lignes VTY',a:'Lignes d\'accès distant (Telnet/SSH), numérotées de 0 à 15.',tags:['mots de passe'],d:3},
+  {t:'qa',q:'Quelle commande chiffre les mots de passe ?',a:'service password-encryption (vérification avec show running-config).',tags:['mots de passe'],d:2},
+  {t:'qa',q:'Comment configurer une bannière ?',a:'banner motd #Authorized Access Only!#',expl:'Le # sert de délimiteur.',tags:['configuration de base'],d:3},
+  {t:'qa',q:'Quelle différence entre startup-config et running-config ?',a:'startup-config : en NVRAM, conservée à l\'extinction, chargée au démarrage. running-config : en RAM, configuration active, perdue au redémarrage, modifications appliquées immédiatement.',tags:['sauvegarde'],d:3,star:true},
+  {t:'mcq',q:'Où est stockée la startup-config ?',opts:['En NVRAM','En RAM','En mémoire flash','En ROM'],ok:0,tags:['sauvegarde'],d:2},
+  {t:'tf',q:'La running-config est conservée après un redémarrage.',tf:false,expl:'Elle est en RAM et perdue au redémarrage : il faut la sauvegarder dans la startup-config.',tags:['sauvegarde','pièges'],d:2},
+  {t:'qa',q:'Quelle commande sauvegarde la configuration active ?',a:'copy running-config startup-config',tags:['sauvegarde'],d:1,star:true},
+  {t:'qa',q:'Quelles sont les 3 façons d\'annuler des modifications ?',a:'Supprimer les commandes une par une ; reload (coupure brève du réseau) ; erase startup-config puis reload si les changements étaient déjà sauvegardés.',tags:['sauvegarde'],d:4},
+  {t:'qa',q:'Comment capturer la configuration dans un fichier texte avec PuTTY ?',a:'1. Activer le logging (« All session output ») et choisir un nom de fichier. 2. Lancer show running-config. 3. Désactiver le logging (« None »).',tags:['sauvegarde'],d:4},
+  {t:'qa',q:'Quel est le format d\'une adresse IPv4 ?',a:'32 bits, en notation décimale pointée : 4 nombres de 0 à 255.',tags:['adressage IP'],d:1},
+  {t:'term',term:'Masque de sous-réseau',a:'Sépare la partie réseau de la partie hôte d\'une adresse IPv4.',tags:['adressage IP'],d:2},
+  {t:'term',term:'Passerelle par défaut',a:'Adresse du routeur qui donne accès aux autres réseaux, dont Internet.',tags:['adressage IP'],d:2},
+  {t:'qa',q:'Quel est le format d\'une adresse IPv6 ?',a:'128 bits : 32 chiffres hexadécimaux en groupes de 4 séparés par « : », insensible à la casse.',tags:['adressage IP'],d:2},
+  {t:'mcq',q:'Combien de bits compte une adresse IPv6 ?',opts:['128','32','64','256'],ok:0,tags:['adressage IP'],d:1},
+  {t:'qa',q:'Selon quels critères les supports de transmission diffèrent-ils ?',a:'Distance, environnement d\'installation, débit et coût.',ex:'Paires torsadées cuivre, fibre, coaxial, sans fil.',tags:['supports'],d:3},
+  {t:'qa',q:'Que faut-il renseigner pour configurer manuellement l\'IP d\'un poste ?',a:'Adresse IP, masque de sous-réseau, passerelle par défaut et DNS.',tags:['adressage IP'],d:2},
+  {t:'tf',q:'La plupart des postes sont configurés par défaut avec une adresse IP manuelle.',tf:false,expl:'Par défaut, la plupart des postes utilisent DHCP.',tags:['adressage IP','pièges'],d:2},
+  {t:'qa',q:'Quels mécanismes attribuent automatiquement une adresse IPv6 ?',a:'DHCPv6 et SLAAC.',tags:['adressage IP'],d:3},
+  {t:'term',term:'SVI (interface virtuelle du switch)',a:'Interface virtuelle qui sert à administrer le switch à distance.',tags:['SVI'],d:3},
+  {t:'qa',q:'Quelles commandes configurent la SVI du VLAN 1 ?',a:'interface vlan 1, puis ip address 192.168.1.20 255.255.255.0, puis no shutdown.',err:'Oublier no shutdown : l\'interface reste désactivée.',tags:['SVI'],d:4}
  ]}
 ];
 function seedDemo(){
-  const now=Date.now(),r=rngFrom(20251003);
-  const decks=[],cards=[],history=[],sessions=[];
+  const now=Date.now();
+  const decks=[],cards=[];
   DEMO.forEach((D,i)=>{
-    const created=now-(36-i*4)*DAY;
-    const deck={id:uid(),name:D.name,subject:D.subject,chapter:D.chapter,theme:D.theme,level:D.level,lang:D.lang,color:D.color,fields:{...DEFAULT_FIELDS,src:i===0},created,updated:created,lastStudied:0};
+    const created=now-(3-i)*MIN;
+    const deck={id:uid(),name:D.name,subject:D.subject,chapter:D.chapter,theme:D.theme,level:D.level,lang:D.lang,color:D.color,fields:{...DEFAULT_FIELDS,src:true},created,updated:created,lastStudied:0};
     decks.push(deck);
-    D.cards.forEach((c,j)=>cards.push(makeCard(deck.id,c,j,created)));
+    D.cards.forEach((c,j)=>cards.push(makeCard(deck.id,{...c,src:c.src||SRC_NET},j,created)));
   });
-  const activity=[.62,.48,.4,.3];
-  for(let d=29;d>=1;d--){
-    decks.forEach((deck,i)=>{
-      if(r()>activity[i]) return;
-      let t=startOfDay(now-d*DAY)+(16+Math.floor(r()*6))*HOUR+Math.floor(r()*55)*MIN;
-      const dc=cards.filter(c=>c.deckId===deck.id);
-      const pool=dc.slice(0,dc.length-2);
-      const due=pool.filter(c=>c.srs.reps&&c.srs.due<=t);
-      const fresh=pool.filter(c=>!c.srs.reps).slice(0,3+Math.floor(r()*2));
-      const q=[...due,...fresh];
-      if(!q.length) return;
-      const start=t;let ok=0;
-      q.forEach(c=>{
-        const pFail=.03+c.diff*.05,x=r();
-        const g=x<pFail?0:x<pFail+.1+c.diff*.03?1:x<.84?2:3;
-        const ms=Math.round((5+r()*12+c.diff*2.5)*1000);
-        t+=ms;c.srs=schedule(c.srs,g,t);
-        history.push({t,card:c.id,deck:deck.id,g,ms,ivl:c.srs.ivl});
-        if(g>0) ok++;
-      });
-      sessions.push({id:uid(),deck:deck.id,start,end:t,n:q.length,ok,ms:t-start});
-      deck.lastStudied=t;
-    });
-  }
-  decks.forEach((d,i)=>{d.updated=Math.max(d.created,now-(i*2+1)*DAY-i*HOUR*3);});
-  return {v:1,decks,cards,history,sessions,settings:defaultSettings()};
+  return {v:2,decks,cards,history:[],sessions:[],settings:defaultSettings()};
 }
 
 /* ---------- persistance ---------- */
-const STORE_KEY='mnemo.flashcards.v1';
+const STORE_KEY='mnemo.flashcards.v2';
 let STORAGE_OK=true;
-function loadDB(){try{const raw=localStorage.getItem(STORE_KEY);if(raw){const d=JSON.parse(raw);if(d&&Array.isArray(d.decks))return d;}}catch(e){STORAGE_OK=false;}return null;}
+function loadDB(){try{localStorage.removeItem('mnemo.flashcards.v1');}catch(e){}try{const raw=localStorage.getItem(STORE_KEY);if(raw){const d=JSON.parse(raw);if(d&&Array.isArray(d.decks))return d;}}catch(e){STORAGE_OK=false;}return null;}
 let saveT=0;
 function persist(){clearTimeout(saveT);saveT=setTimeout(()=>{try{localStorage.setItem(STORE_KEY,JSON.stringify(DB));STORAGE_OK=true;}catch(e){STORAGE_OK=false;}const el=$('#saveState');if(el){el.classList.toggle('off',!STORAGE_OK);el.lastElementChild.textContent=STORAGE_OK?'Sauvegardé sur cet appareil':'Sauvegarde locale indisponible';}},250);}
 
@@ -1864,7 +1879,7 @@ VIEWS.settings=()=>{
       <div class="notice ${STORAGE_OK?'good':'warn'}">${ic(STORAGE_OK?'check':'alert',16)}<div>${STORAGE_OK?'Vos données sont enregistrées dans ce navigateur, sur cet appareil uniquement. Exportez-les en JSON pour les sauvegarder ou les transférer.':'Le stockage local est indisponible (navigation privée ?). Vos modifications seront perdues à la fermeture : pensez à exporter.'}</div></div>
       <div class="set-row"><div><b>Exporter</b><small>CSV, JSON ou texte, pour un deck ou tous</small></div><button class="btn btn-sm" data-act="open-export">${ic('download',15)}Exporter</button></div>
       <div class="set-row"><div><b>Importer</b><small>CSV avec correspondance des colonnes, JSON ou texte brut</small></div><button class="btn btn-sm" data-act="open-import">${ic('upload',15)}Importer</button></div>
-      <div class="set-row"><div><b>Données de démonstration</b><small>Remplace tout par les 4 decks d'exemple et leur historique</small></div><button class="btn btn-sm" data-act="set-demo">${ic('refresh',15)}Recharger</button></div>
+      <div class="set-row"><div><b>Decks Réseaux d'origine</b><small>Remplace tout par les 3 decks des modules 1 et 2, sans progression</small></div><button class="btn btn-sm" data-act="set-demo">${ic('refresh',15)}Restaurer</button></div>
       <div class="set-row"><div><b style="color:var(--bad)">Tout effacer</b><small>Supprime decks, cartes, historique et statistiques</small></div><button class="btn btn-sm btn-danger" data-act="set-wipe">${ic('trash',15)}Effacer</button></div>
     </section>
     <section class="panel"><div class="panel-h"><h3>À propos de la répétition espacée</h3></div>
@@ -1876,7 +1891,7 @@ ACT['set-val']=el=>{S[el.dataset.k]=el.dataset.v;applySettings();persist();rende
 ACT['set-toggle']=el=>{const k=el.dataset.k;S[k]=!S[k];applySettings();persist();render();if(k==='sound'&&S.sound)sound('good');};
 ACT['set-test-sound']=()=>sound('easy',true);
 IN['set-new']=el=>{S.newLimit=Number(el.value);$('#set-new-o').textContent=el.value;persist();renderSidebar();};
-ACT['set-demo']=()=>confirmBox({title:'Recharger la démonstration ?',text:'Tous vos decks, cartes et statistiques actuels seront remplacés par les données d\'exemple. Exportez d\'abord ce que vous voulez garder.',ok:'Remplacer mes données',onOk:()=>{const keep={...S};DB=seedDemo();DB.settings=keep;S=DB.settings;UI.session=null;UI.editorDeck=null;persist();render();toast('Données de démonstration rechargées');}});
+ACT['set-demo']=()=>confirmBox({title:'Restaurer les decks Réseaux ?',text:'Tous vos decks, cartes et statistiques actuels seront remplacés par les 3 decks Réseaux d\'origine, sans progression. Exportez d\'abord ce que vous voulez garder.',ok:'Remplacer mes données',onOk:()=>{const keep={...S};DB=seedDemo();DB.settings=keep;S=DB.settings;UI.session=null;UI.editorDeck=null;persist();render();toast('Decks Réseaux restaurés');}});
 ACT['set-wipe']=()=>confirmBox({title:'Effacer toutes les données ?',text:'Decks, cartes, progression et historique seront définitivement supprimés de ce navigateur. Cette action est irréversible.',ok:'Tout effacer',onOk:()=>{const keep={...S};DB={v:1,decks:[],cards:[],history:[],sessions:[],settings:keep};S=DB.settings;UI.session=null;UI.editorDeck=null;persist();render();toast('Toutes les données ont été effacées');}});
 /* =========================================================
    Générateur : analyse du texte + fabrication des cartes
